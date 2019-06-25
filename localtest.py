@@ -43,3 +43,4 @@ def change_max_bandwidth():
 
     print("Download Error: " + str(downloadError))
     print("Upload Error: " + str(uploadError))
+change_max_bandwidth()
