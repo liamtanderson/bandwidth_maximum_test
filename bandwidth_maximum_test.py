@@ -12,7 +12,13 @@ import yaml
 
 import logger
 
-class robot_testcase:
+class RobotFatalError(RuntimeError):
+	''' 
+	Raised when the test fails and you need to exit with a failiure
+	'''
+	ROBOT_EXIT_ON_FAILURE = True
+
+class bandwidth_maximum_test:
 
     def __init__(self):
         log = logger.attach_to_logger(__name__)
@@ -38,7 +44,7 @@ class robot_testcase:
         #Now we need to start Killer and see if change is made
         call(["sc", "start", "Killer Network Service x64"]) #Starts killer network service via command line
         
-        driver = webdriver.Chrome(executable_path = 'chromedriver.exe') #Slave computer needs a folder with chromeddriver.exe in it for this line to run
+        driver = webdriver.Chrome(executable_path = 'chromedriver.exe') #Logs in as a chrome user
         driver.get('http://killernetworking.speedtestcustom.com/')#Opens up killer's speed test via chrome
         id_box = driver.find_element_by_xpath('//*[@id="main-content"]/div[1]/div/button')#Isolates the "go" button
         id_box.click()#clicks go button
