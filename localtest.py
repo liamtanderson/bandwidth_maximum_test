@@ -13,6 +13,8 @@ import yaml
 import logger
 
 def bandwidth_maximum_test(self):
+    bandwidthup = "10000000"
+    bandwidthdown = "10000000"
     log = logger.attach_to_logger(__name__)
     log.info('Starting: Bandwidth Maximum Test')
     start = timer()
@@ -33,7 +35,7 @@ def bandwidth_maximum_test(self):
     #Now we need to start Killer and see if change is made
     call(["sc", "start", "Killer Network Service x64"]) #Starts killer network service via command line
     
-    driver = webdriver.Chrome(executable_path = 'C:/Users/Rivet/Desktop/chromedriver_win32/chromedriver.exe') #Slave computer needs a folder with chromeddriver.exe in it for this line to run
+    driver = webdriver.Chrome(executable_path = 'chromedriver.exe')
     driver.get('http://killernetworking.speedtestcustom.com/')#Opens up killer's speed test via chrome
     id_box = driver.find_element_by_xpath('//*[@id="main-content"]/div[1]/div/button')#Isolates the "go" button
     id_box.click()#clicks go button
