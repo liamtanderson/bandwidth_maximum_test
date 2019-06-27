@@ -62,3 +62,10 @@ class bandwidth_maximum_test:
 
         log.info('Download Error: ' + downloadError)
         log.info('Upload Error: ' + uploadError)
+
+        if downloadError>-0.01 and downloadError<0.01:
+            return 'PASS'
+        elif downloadError>-0.03 and downloadError<0.03:
+            return 'WARN'
+        else:
+            return 'FAIL'
