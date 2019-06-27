@@ -1,15 +1,23 @@
-#Local Test
+#Public Test
 from subprocess import call
 from xml.dom import minidom
 import xml.etree.ElementTree as ET
 import selenium
 from selenium import webdriver
+from timeit import default_timer as timer
 import time
 
-def change_max_bandwidth():
-    bandwidthup = "10000000"
-    bandwidthdown = "10000000"
-    
+import requests
+import yaml
+
+import logger
+
+def bandwidth_maximum_test(self):
+    log = logger.attach_to_logger(__name__)
+    log.info('Starting: Bandwidth Maximum Test')
+    start = timer()
+    end = None
+
     call(["sc", "stop", "Killer Network Service x64"]) #Stops killer network service via command line
 
     #Now that killer network service is stopped, user.xml can be updated
@@ -25,7 +33,7 @@ def change_max_bandwidth():
     #Now we need to start Killer and see if change is made
     call(["sc", "start", "Killer Network Service x64"]) #Starts killer network service via command line
     
-    driver = webdriver.Chrome(executable_path = 'chromedriver.exe') #Slave computer needs a folder with chromeddriver.exe in it for this line to run
+    driver = webdriver.Chrome(executable_path = 'C:/Users/Rivet/Desktop/chromedriver_win32/chromedriver.exe') #Slave computer needs a folder with chromeddriver.exe in it for this line to run
     driver.get('http://killernetworking.speedtestcustom.com/')#Opens up killer's speed test via chrome
     id_box = driver.find_element_by_xpath('//*[@id="main-content"]/div[1]/div/button')#Isolates the "go" button
     id_box.click()#clicks go button
@@ -39,8 +47,8 @@ def change_max_bandwidth():
     uploadSpeed = float(uploadSpeed) * 1000000
 
     downloadError = 0.93 - downloadSpeed/float(bandwidthdown)  
-    uploadError = 0.93 - uploadSpeed/float(bandwidthup) 
+    uploadError = 0.93 - uploadSpeed/float(bandwidthup)
 
-    print("Download Error: " + str(downloadError))
-    print("Upload Error: " + str(uploadError))
+    log.info('Download Error: ' + downloadError)
+    log.info('Upload Error: ' + uploadError)
 change_max_bandwidth()
